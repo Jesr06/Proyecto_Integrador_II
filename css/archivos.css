@@ -1,0 +1,45 @@
+#drop-area {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    height: 150px;
+    
+  }
+
+.mensajeJS{
+  font-size: larger;
+  font-weight: bold;
+}
+
+.cajaGrande{
+  margin-left: 100px;
+  margin-right: 100px;
+}
+  .barraSup{
+    background-color: #dc3545;
+    color: white;
+    padding: 5px 0;
+    text-align: center;
+      
+  }
+
+  .texto-area{
+    padding-top: 20px;
+  }
+
+  .div-botones{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .boton-archivo{
+    margin-top: 10px;
+    margin-right: 10px;
+    top: 10px;
+    right: 10px;
+    padding: 10px 20px;
+    text-align: center;
+    margin-left: 10px;
+  }
