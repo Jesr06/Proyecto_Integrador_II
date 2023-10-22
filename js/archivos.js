@@ -1,3 +1,4 @@
+
 const dropArea = document.getElementById('drop-area');
 const enviarDatosButton = document.getElementById('enviarUsuarios');
 
@@ -76,30 +77,40 @@ function handleFiles(files) {
 
       console.log("Datos del archivo Excel convertidos a JSON:", datosJson);
 
+      // Mostrar el botón enviarUsuarios después de leer los datos del archivo
+      enviarDatosButton.style.display = 'block';
 
-
-      enviarDatosButton.addEventListener('click', function () {
-        //codigo para insertar los datos
-
-
-        // Hacer una solicitud POST al servidor para insertar los datos en la base de datos
-        fetch('/insertar', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(datosJson) // Convertir los datos a JSON y enviarlos en el cuerpo de la solicitud
-        })
-          .then(response => response.json()) // Parsear la respuesta del servidor como JSON
-          .then(data => {
-            // Manejar la respuesta del servidor
-            console.log(data); // Puedes mostrar la respuesta en la consola o en la interfaz de usuario
-          })
-          .catch(error => {
-            // Manejar errores en la solicitud
-            console.error('Error al enviar datos:', error);
-          });
-      });
+      enviarDatosButton.addEventListener('click', async () => {
+        if (datosJson && datosJson.length > 0) {
+            try {
+                console.log('Antes de la solicitud fetch');
+                console.log(datosJson);
+    
+                const response = await fetch('http://localhost:5500/api/insertar', {
+                    method: 'POST',
+                    body: JSON.stringify(datosJson), // Convertir los datos a JSON y enviarlos en el cuerpo de la solicitud
+                    cache: 'default',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+    
+                if (response.ok) {
+                    const responseData = await response.json(); // Esperar la respuesta del servidor
+                    console.log('Respuesta del servidor:', responseData);
+                } else {
+                    console.error('Error en la solicitud:', response.status, response.statusText);
+                }
+    
+                console.log('Después de la solicitud fetch');
+                console.log(datosJson);
+            } catch (error) {
+                console.error('Error al realizar la solicitud:', error);
+            }
+        } else {
+            console.log("No hay datos para enviar.");
+        }
+    });
 
 
 

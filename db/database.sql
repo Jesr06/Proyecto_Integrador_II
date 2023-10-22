@@ -1,0 +1,3 @@
+USE semint;
+
+DESCRIBE usuarios;
