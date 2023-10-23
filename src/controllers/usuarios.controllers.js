@@ -1,21 +1,28 @@
 
 import { pool } from "../db.js";
 
-export const getusuarios = async (req, res) => {
+
+
+export const getlogin = async (req, res) => {
+    const connection = await pool.getConnection();
     try {
-        const [rows] = await pool.query('SELECT * FROM usuarios')
-        res.json(rows)
+        const user = req.body.user;
+        const pass = req.body.pass;
+        await connection.query('SELECT * FROM usuarios WHERE correo =? AND contrasena =?' ,[user,pass])
+        window.location = "perfil_administrador.html";
+
     } catch (error) {
         return res.status(500).json({
             message: 'Algo ha salido mal'
         })
     }
 }
+export const getusuario = async (req, res) => {
 
-export const getusuario = (req, res) => {
-    //GetUsuario
+    const [rows] = await pool.query('SELECT * FROM usuarios WHERE tipo = ?', [req.params.tipo])
+    console.log(rows)
+    res.send('Obteniendo empleado')
 
-    
 }
 
 export const nuevosUsuarios = async (req, res) => {
@@ -45,9 +52,9 @@ export const nuevosUsuarios = async (req, res) => {
     } finally {
         connection.release();
     }
-    
-    
-    
+
+
+
     // try {
     //     console.log('Solicitud POST recibida en /insertar')
     //     const estudiantes = req.body;
