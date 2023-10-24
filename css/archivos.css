@@ -10,6 +10,9 @@
 .mensajeJS{
   font-size: larger;
   font-weight: bold;
+  display: flex;
+  align-items: flex-start;
+  
 }
 
 .cajaGrande{
@@ -23,9 +26,12 @@
     text-align: center;
       
   }
-
+.formato{
+  margin-bottom: 20px;
+}
   .texto-area{
     padding-top: 20px;
+    padding-bottom: 10px;
   }
 
   .div-botones{

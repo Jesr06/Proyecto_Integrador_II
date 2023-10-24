@@ -14,6 +14,7 @@ dropArea.addEventListener('dragleave', function (event) {
 });
 
 dropArea.addEventListener('drop', function (event) {
+  dropArea.appendChild(" ");
   event.preventDefault();
   dropArea.style.border = '2px dashed #ccc';
 
@@ -26,8 +27,7 @@ dropArea.addEventListener('drop', function (event) {
     nombreArchivo.classList.add("mensajeJS")
 
     nombreArchivo.textContent = `Archivo seleccionado: ${archivo.name}`;
-    const cajaPadre = document.getElementById("cajaGrande")
-    cajaPadre.appendChild(nombreArchivo);
+    dropArea.appendChild(nombreArchivo);
 
 
     handleFiles(files);
@@ -48,7 +48,11 @@ dropArea.addEventListener('click', function () {
       nombreArchivo.classList.add("mensajeJS")
       nombreArchivo.textContent = `Archivo seleccionado: ${archivo.name}`;
       const cajaPadre = document.getElementById("cajaGrande")
-      cajaPadre.appendChild(nombreArchivo);
+      const logoExcel  = new Image(100,50)
+      logoExcel.src = "../img/excel.svg"
+      logoExcel.classList.add("mensajeJS")
+      dropArea.append(logoExcel,nombreArchivo);
+
 
 
       handleFiles(files);
@@ -62,6 +66,7 @@ function handleFiles(files) {
     console.log("No se han seleccionado archivos.");
     return;
   }
+  
 
   const archivo = files[0];
 
@@ -104,6 +109,15 @@ function handleFiles(files) {
     
                 console.log('Después de la solicitud fetch');
                 console.log(datosJson);
+                if(response.status===200){
+                  while (dropArea.firstChild) {
+                    dropArea.removeChild(dropArea.firstChild);
+                  }
+                  const Mensaje = document.createElement('p');
+                  Mensaje.classList.add("mensajeJS")
+                  Mensaje.textContent = `Usuarios almacenados con exito`;
+                  dropArea.appendChild(Mensaje);
+                }
             } catch (error) {
                 console.error('Error al realizar la solicitud:', error);
             }
@@ -120,12 +134,13 @@ function handleFiles(files) {
 
     lector.readAsBinaryString(archivo);
   } else {
-    console.log("Por favor, selecciona un archivo Excel (.xlsx).");
+    while (dropArea.firstChild) {
+      dropArea.removeChild(dropArea.firstChild);
+    }
     const nombreArchivo = document.createElement('p');
     nombreArchivo.classList.add("mensajeJS")
     nombreArchivo.textContent = `Por favor, selecciona un archivo Excel (.xlsx).`;
-    const cajaPadre = document.getElementById("cajaGrande")
-    cajaPadre.appendChild(nombreArchivo);
+    dropArea.appendChild(nombreArchivo);
 
   }
 

@@ -8,7 +8,7 @@ export const getlogin = async (req, res) => {
     try {
         const user = req.body.user;
         const pass = req.body.pass;
-        await connection.query('SELECT * FROM usuarios WHERE correo =? AND contrasena =?' ,[user,pass])
+        await connection.query('SELECT * FROM usuarios WHERE correo =? AND contrasena =?', [user, pass])
         window.location = "perfil_administrador.html";
 
     } catch (error) {
@@ -43,7 +43,9 @@ export const nuevosUsuarios = async (req, res) => {
         }
 
         await connection.commit();
-        res.status(200).json("Nice");
+        res.status(200).json({rta:"Los usuarios han sido cargados"});
+        
+
     } catch (error) {
         await connection.rollback();
         return res.status(500).json({
