@@ -22,8 +22,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         });
         const data = await response.json()
+
        if(response.status==200){
             
+
             if(data.isadmin==true){
                  window.location.href="/admin/perfil_administrador.html";
             }
