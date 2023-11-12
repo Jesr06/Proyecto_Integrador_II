@@ -5,6 +5,7 @@ import { nuevosUsuarios } from "../controllers/usuarios.controllers.js";
 import { nuevasMaterias } from "../controllers/usuarios.controllers.js";
 import { actualizarUsuarios } from "../controllers/usuarios.controllers.js";
 import { eliminarUsuarios } from "../controllers/usuarios.controllers.js";
+import { getSemestre } from "../controllers/usuarios.controllers.js";
 
 const router = Router()
 
@@ -18,7 +19,8 @@ router.post('/materias',nuevasMaterias )
 
 router.put('/act', actualizarUsuarios)
 
-router.delete('/delete', eliminarUsuarios )
+router.delete('/delete', eliminarUsuarios)
 
+router.post('/semestre', getSemestre)
 
 export default router

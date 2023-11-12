@@ -1,4 +1,3 @@
-
 const dropArea = document.getElementById('drop-materias');
 const enviarDatosButton = document.getElementById('enviarMaterias');
 

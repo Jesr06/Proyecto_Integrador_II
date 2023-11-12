@@ -40,6 +40,7 @@ export const getlogin = async (req, res) => {
         });
     }
 }
+
 export const getusuario = async (req, res) => {
 
     const [rows] = await pool.query('SELECT * FROM usuarios WHERE tipo = ?', [req.params.tipo])
@@ -102,6 +103,30 @@ export const nuevasMaterias = async (req, res) => {
     } finally {
         connection.release();
     }
+}
+
+export const getSemestre = async (req, res) => {
+    const connection = await pool.getConnection();
+    console.log(typeof req.body)
+    console.log(req.body)
+    try {
+        const id = req.body.id;
+        const inicio = req.body.inicio;
+        const fin = req.body.fin;
+
+        await connection.query(`INSERT INTO semestre (fechaInicio, id_semestre, fechaFinalizacion) VALUES (?, ?, ?)`, [inicio, id, fin]);
+
+        await connection.commit();
+        res.status(200).json({ rta: "El semestre han sido cargados" });
+
+    } catch (error) {
+        await connection.rollback();
+        return res.status(500).json({
+            message: 'Algo ha salido mal al intentar cargar el semestre'
+        });
+    } finally {
+        connection.release();
+    }        
 }
 
 export const actualizarUsuarios = (req, res) => res.send('actualizando usuarios')
