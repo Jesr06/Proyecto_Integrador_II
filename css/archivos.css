@@ -6,6 +6,14 @@
     height: 150px;
     
   }
+  #drop-materias {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    height: 150px;
+    
+  }
 
 .mensajeJS{
   font-size: larger;
