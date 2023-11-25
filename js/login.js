@@ -1,11 +1,12 @@
 
 document.addEventListener("DOMContentLoaded", function () {
-    
+
     document.getElementById('formulario').addEventListener('submit', async (event) => {
         event.preventDefault();
-        
+
         const user = document.getElementById("correo").value;
         const pass = document.getElementById("contrasena").value;
+
         const body = {
             user: user,
             pass: pass
@@ -18,24 +19,31 @@ document.addEventListener("DOMContentLoaded", function () {
                 'Content-Type': 'application/json'
             }
 
-        
-
         });
-        const data = await response.json()
+        const data = await response.json();
+        console.log(data);
 
-       if(response.status==200){
+
+
+
+        if (response.status == 200) {
+            localStorage.setItem("infoUser",JSON.stringify(data))
+
+           
             
+            if (data.isadmin == true) {
+                window.location.href = "/admin/perfil_administrador.html";
+            }
+            else {
 
-            if(data.isadmin==true){
-                 window.location.href="/admin/perfil_administrador.html";
+                window.location.href = "/profesor/perfil_profesor.html";
+
             }
-            else{
-                 window.location.href="/profesor/perfil_profesor.html"
-            }
-       }
-       else{
+        }
+        else {
             alert("Credenciales incorrectas");
-       }
+        }
+
+
     });
 });
-   

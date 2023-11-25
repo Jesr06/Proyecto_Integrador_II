@@ -4,35 +4,43 @@ import { pool } from "../db.js";
 
 export const getlogin = async (req, res) => {
     const connection = await pool.getConnection();
-    console.log(typeof req.body)
-    let isadmin = false;
-    let autenticado = false;
+  
+    let isadmin=false;
+    let autenticado=false;
+    let nombre;
+    let correo;
     console.log(req.body)
     try {
         const user = req.body.user;
         const pass = req.body.pass;
+       
+        
+        const results = await connection.query('SELECT * FROM usuarios WHERE correo = ? AND contrasena = ?' , [ user, pass ])
+        console.log(results[0][0])
 
-
-        const results = await connection.query('SELECT * FROM usuarios WHERE correo = ? AND contrasena = ?', [user, pass])
-
-        if (results[0].length >= 1) {
+        
+        
+        if (results[0].length>=1) {
             // El usuario se autenticó correctamente
-            autenticado = true;
+            autenticado=true;
+            nombre = results[0][0].nombre;
+            correo = results[0][0].correo;
             console.log("Autenticación exitosa");
-            if (results[0][0].tipo == 1) {
-
-                isadmin = true;
-
-            }
-            res.status(200).json({ isadmin: isadmin, autenticado: autenticado })
-
+        if(results[0][0].tipo==1){
+            
+         isadmin=true;
+            
+        } 
+        res.status(200).json({isadmin:isadmin,autenticado:autenticado,nombre:nombre,correo:correo})
+           
         } else {
+            // Las credenciales son incorrectas
             console.log("Credenciales incorrectas");
-
+            
             res.status(401).json({ message: "Credenciales incorrectas" });
-
+            
         }
-
+        
     } catch (error) {
         console.error('Error de consulta:', error);
         return res.status(500).json({
