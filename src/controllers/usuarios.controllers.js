@@ -9,6 +9,10 @@ export const getlogin = async (req, res) => {
     let autenticado = false;
     let nombre;
     let correo;
+    let codigo;
+    let celular;
+    let documento;
+    let materias;
     console.log(req.body)
     try {
         const user = req.body.user;
@@ -25,13 +29,20 @@ export const getlogin = async (req, res) => {
             autenticado = true;
             nombre = results[0][0].nombre;
             correo = results[0][0].correo;
+            codigo = results[0][0].codigo;
+            celular = results[0][0].celular;
+            documento = results[0][0].documento;
+            materias = results[0][0].materias;
             console.log("Autenticación exitosa");
             if (results[0][0].tipo == 1) {
 
                 isadmin = true;
 
             }
-            res.status(200).json({ isadmin: isadmin, autenticado: autenticado, nombre: nombre, correo: correo })
+            res.status(200).json({
+                isadmin: isadmin, autenticado: autenticado, nombre: nombre,
+                correo: correo, codigo: codigo, celular: celular, documento: documento, materias: materias
+            })
 
         } else {
             // Las credenciales son incorrectas
@@ -49,12 +60,39 @@ export const getlogin = async (req, res) => {
     }
 }
 
-export const getusuario = async (req, res) => {
+export const actualizarUsuarios = async (req, res) => {
+    const connection = await pool.getConnection();
+    const codigo = req.body.codigo;
+    let celular = req.body.celular;
+    let documento = req.body.documento;
+    let nombre = req.body.nombre;
+    console.log(req.body);
+    if (documento == "") {
+        documento = null;    
+    }
+    if (nombre == "") {
+        nombre = null;    
+    }
+    if (celular == "") {
+        celular = null;    
+    }
+    await connection.query('UPDATE usuarios SET nombre = IFNULL(?, nombre), celular = IFNULL(?, celular), documento = IFNULL(?, documento) WHERE codigo = ?', [nombre, celular, documento, codigo])
 
-    const [rows] = await pool.query('SELECT * FROM usuarios WHERE tipo = ?', [req.params.tipo])
-    console.log(rows)
-    res.send('Obteniendo empleado')
 
+    const [rows] = await connection.query('SELECT * FROM usuarios WHERE codigo = ?', [codigo])
+
+    res.status(200).json({rta:"Todo bien"})
+    
+}
+
+export const cambioContrasena = async (req, res) => {
+    const connection = await pool.getConnection();
+    const codigo = req.body.codigo;
+    const contrasena = req.body.contrasena;
+
+    await connection.query('UPDATE usuarios SET contrasena = ? WHERE codigo = ?', [contrasena, codigo])
+
+    res.status(200).json({rta:"Todo bien"})
 }
 
 export const nuevosUsuarios = async (req, res) => {
@@ -173,7 +211,5 @@ export const proyectos = async (req, res) => {
     }
 }
 
-
-export const actualizarUsuarios = (req, res) => res.send('actualizando usuarios')
 
 export const eliminarUsuarios = (req, res) => res.send('Eliminando usuarios')

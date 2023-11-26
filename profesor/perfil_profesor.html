@@ -47,7 +47,7 @@
                         <h5>Número de documento</h5>
                     </div>
                     <div class="elemento">
-                        <p>1005789632</p>
+                        <p id="documento"></p>
                     </div>
                 </div>
                 <div class="columna">
@@ -55,13 +55,14 @@
                         <h5>Célular</h5>
                     </div>
                     <div class="elemento">
-                        <p>3125874696</p>
+                        <p id="celular"></p>
                     </div>
                 </div>
             </div>
             <div class="botones">
-                <div class="btn" href="/profesor/cambiar_datos.html"><button>Actualizar datos</button></div>
-                <div class="btn" href="/profesor/cambiar_contraseña.html"><button>Cambiar contraseña</button></div>
+                <div class="btn"><a href="/profesor/cambiar_datos.html"><button>Actualizar datos</button></a></div>
+                <div class="btn"><a href="/profesor/cambiar_contraseña.html"><button>Cambiar contraseña</button></a>
+                </div>
             </div>
         </div>
 
@@ -76,15 +77,16 @@
                 <h2>Materias asociadas</h2>
             </div>
             <div class="mat_asociadas">
-                <a href="/profesor/subir_proyecto.html" id="materia">11251</a>
+                <div class="mate"><a id="materias" href="/profesor/subir_proyecto.html"></a></div>
             </div>
             <div class="cierre">
                 <a href="/login.html"><button>Cerrar sesión</button></a>
             </div>
         </div>
     </div>
+    <script src="../js/cambiar_datos.js"></script>
     <script src="../js/profesor.js"></script>
-    
+
 </body>
 
 </html>
