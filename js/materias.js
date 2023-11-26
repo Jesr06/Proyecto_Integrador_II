@@ -125,10 +125,6 @@ function handleFiles(files) {
                 }
             });
 
-
-
-
-
         };
 
         lector.readAsBinaryString(archivo);
