@@ -104,6 +104,35 @@ export const nuevasMaterias = async (req, res) => {
     }
 }
 
+export const proyectos = async (req, res) => {
+    const connection = await pool.getConnection();
+    try {
+        console.log('Solicitud POST recibida en /proyectos');
+        const proyectos = req.body;
+        console.log(proyectos);
+
+        await connection.beginTransaction();
+
+        const sql = 'INSERT INTO proyecto (id_materia, nombre, integrantes, descripcion, id_semestre_proyecto) VALUES (?, ?, ?, ?, ?)';
+
+        for (const proyecto of proyectos) {
+            const { id_materia, nombre, integrantes, descripcion, id_semestre_proyecto } = proyecto;
+            await connection.query(sql, [id_materia, nombre, integrantes, descripcion, id_semestre_proyecto]);
+        }
+
+        await connection.commit();
+        res.status(200).json({ rta: "El proyecto se ha subido" });
+    } catch (error) {
+        await connection.rollback();
+        return res.status(500).json({
+            message: 'Algo ha salido mal al intentar insertar subir el proyecto'
+        });
+    } finally {
+        connection.release();
+    }
+}
+
+
 export const actualizarUsuarios = (req, res) => res.send('actualizando usuarios')
 
 export const eliminarUsuarios = (req, res) => res.send('Eliminando usuarios')

@@ -5,6 +5,7 @@ import { nuevosUsuarios } from "../controllers/usuarios.controllers.js";
 import { nuevasMaterias } from "../controllers/usuarios.controllers.js";
 import { actualizarUsuarios } from "../controllers/usuarios.controllers.js";
 import { eliminarUsuarios } from "../controllers/usuarios.controllers.js";
+import { proyectos } from "../controllers/usuarios.controllers.js";
 
 const router = Router()
 
@@ -17,6 +18,8 @@ router.post('/insertar',nuevosUsuarios )
 router.post('/materias',nuevasMaterias )
 
 router.put('/act', actualizarUsuarios)
+
+router.post('/proyectos', proyectos )
 
 router.delete('/delete', eliminarUsuarios )
 
