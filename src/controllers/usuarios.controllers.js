@@ -4,35 +4,43 @@ import { pool } from "../db.js";
 
 export const getlogin = async (req, res) => {
     const connection = await pool.getConnection();
-    console.log(typeof req.body)
-    let isadmin = false;
-    let autenticado = false;
+  
+    let isadmin=false;
+    let autenticado=false;
+    let nombre;
+    let correo;
     console.log(req.body)
     try {
         const user = req.body.user;
         const pass = req.body.pass;
+       
+        
+        const results = await connection.query('SELECT * FROM usuarios WHERE correo = ? AND contrasena = ?' , [ user, pass ])
+        console.log(results[0][0])
 
-
-        const results = await connection.query('SELECT * FROM usuarios WHERE correo = ? AND contrasena = ?', [user, pass])
-
-        if (results[0].length >= 1) {
+        
+        
+        if (results[0].length>=1) {
             // El usuario se autenticó correctamente
-            autenticado = true;
+            autenticado=true;
+            nombre = results[0][0].nombre;
+            correo = results[0][0].correo;
             console.log("Autenticación exitosa");
-            if (results[0][0].tipo == 1) {
-
-                isadmin = true;
-
-            }
-            res.status(200).json({ isadmin: isadmin, autenticado: autenticado })
-
+        if(results[0][0].tipo==1){
+            
+         isadmin=true;
+            
+        } 
+        res.status(200).json({isadmin:isadmin,autenticado:autenticado,nombre:nombre,correo:correo})
+           
         } else {
+            // Las credenciales son incorrectas
             console.log("Credenciales incorrectas");
-
+            
             res.status(401).json({ message: "Credenciales incorrectas" });
-
+            
         }
-
+        
     } catch (error) {
         console.error('Error de consulta:', error);
         return res.status(500).json({
@@ -40,6 +48,7 @@ export const getlogin = async (req, res) => {
         });
     }
 }
+
 export const getusuario = async (req, res) => {
 
     const [rows] = await pool.query('SELECT * FROM usuarios WHERE tipo = ?', [req.params.tipo])
@@ -104,34 +113,29 @@ export const nuevasMaterias = async (req, res) => {
     }
 }
 
-export const proyectos = async (req, res) => {
+export const getSemestre = async (req, res) => {
     const connection = await pool.getConnection();
+    console.log(typeof req.body)
+    console.log(req.body)
     try {
-        console.log('Solicitud POST recibida en /proyectos');
-        const proyectos = req.body;
-        console.log(proyectos);
+        const id = req.body.id;
+        const inicio = req.body.inicio;
+        const fin = req.body.fin;
 
-        await connection.beginTransaction();
-
-        const sql = 'INSERT INTO proyecto (id_materia, nombre, integrantes, descripcion, id_semestre_proyecto) VALUES (?, ?, ?, ?, ?)';
-
-        for (const proyecto of proyectos) {
-            const { id_materia, nombre, integrantes, descripcion, id_semestre_proyecto } = proyecto;
-            await connection.query(sql, [id_materia, nombre, integrantes, descripcion, id_semestre_proyecto]);
-        }
+        await connection.query(`INSERT INTO semestre (fechaInicio, id_semestre, fechaFinalizacion) VALUES (?, ?, ?)`, [inicio, id, fin]);
 
         await connection.commit();
-        res.status(200).json({ rta: "El proyecto se ha subido" });
+        res.status(200).json({ rta: "El semestre han sido cargados" });
+
     } catch (error) {
         await connection.rollback();
         return res.status(500).json({
-            message: 'Algo ha salido mal al intentar insertar subir el proyecto'
+            message: 'Algo ha salido mal al intentar cargar el semestre'
         });
     } finally {
         connection.release();
     }
 }
-
 
 export const actualizarUsuarios = (req, res) => res.send('actualizando usuarios')
 

@@ -16,8 +16,16 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "devDependencies": {
     "nodemon": "^3.0.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jesr06/Proyecto_Integrador_II.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Jesr06/Proyecto_Integrador_II/issues"
+  },
+  "homepage": "https://github.com/Jesr06/Proyecto_Integrador_II#readme",
+  "description": ""
 }
