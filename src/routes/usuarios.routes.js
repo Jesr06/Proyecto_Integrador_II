@@ -25,8 +25,6 @@ router.post('/proyectos', proyectos )
 
 router.delete('/delete', eliminarUsuarios)
 
-router.delete('/delete', eliminarUsuarios)
-
 router.post('/semestre', getSemestre)
 
 export default router
