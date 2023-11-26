@@ -20,7 +20,6 @@ router.post('/materias',nuevasMaterias )
 
 router.put('/act', actualizarUsuarios)
 
-
 router.post('/proyectos', proyectos )
 
 router.delete('/delete', eliminarUsuarios)
