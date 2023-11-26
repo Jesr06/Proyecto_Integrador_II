@@ -1,7 +1,6 @@
-// const materiaAsociada = document.getElementById("materia");
-// document.getElementById("codigo").innerText =materiaAsociada;
-// console.log(materiaAsociada);
 
+document.getElementById("codigo").value = localStorage.getItem("materiaAsociada");
+document.getElementById("codigo").disabled=true;
 
 document.addEventListener("DOMContentLoaded", function () {
 
