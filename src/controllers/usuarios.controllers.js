@@ -90,7 +90,7 @@ export const nuevasMaterias = async (req, res) => {
     try {
         console.log('Solicitud POST recibida en /materias');
         const materias = req.body;
-        console.log(materias);
+        console.log(materias, "Endpoint");
 
         await connection.beginTransaction();
 

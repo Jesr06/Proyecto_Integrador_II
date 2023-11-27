@@ -1,3 +1,4 @@
+
 const dropArea = document.getElementById('drop-materias');
 const enviarDatosButton = document.getElementById('enviarMaterias');
 
@@ -125,6 +126,10 @@ function handleFiles(files) {
                 }
             });
 
+
+
+
+
         };
 
         lector.readAsBinaryString(archivo);
@@ -142,6 +147,5 @@ function handleFiles(files) {
 
 
 }
-
 
 
