@@ -4,5 +4,5 @@ document.getElementById("correo").innerText=usuario.correo;
 document.getElementById("documento").innerText=usuario.documento;
 document.getElementById("celular").innerText=usuario.celular;
 document.getElementById("materias").innerText=usuario.materias;
-const materiaAsociada = document.getElementById("materia").innerText;
+const materiaAsociada = document.getElementById("materias").innerText;
 localStorage.setItem("materiaAsociada", materiaAsociada)

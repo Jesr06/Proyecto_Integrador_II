@@ -1,6 +1,36 @@
+// import { fechaDeHoy } from "../src/controllers/usuarios.controllers";
+
 
 document.getElementById("codigo").value = localStorage.getItem("materiaAsociada");
-document.getElementById("codigo").disabled=true;
+document.getElementById("codigo").disabled = true;
+document.getElementById("semestre").disabled = true;
+let fechaHoy;
+const fechaDeHoyPtm = async () => {
+    const responseHOY = await fetch('http://localhost:5500/api/fechaDeHoy', {
+        method: 'GET',
+        cache: 'default',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+
+
+    });
+
+    const dataHOY = await responseHOY.json()
+    // console.log(dataHOY.hoy.id_semestre);
+    const fechaUtil =  dataHOY.hoy
+    console.log(fechaUtil);
+    fechaHoy = fechaUtil;
+    document.getElementById("semestre").value = fechaUtil
+    return fechaUtil;
+}
+
+fechaDeHoyPtm();
+console.log(fechaHoy);
+
+
+
+
 
 document.addEventListener("DOMContentLoaded", function () {
 

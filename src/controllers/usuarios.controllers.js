@@ -68,21 +68,21 @@ export const actualizarUsuarios = async (req, res) => {
     let nombre = req.body.nombre;
     console.log(req.body);
     if (documento == "") {
-        documento = null;    
+        documento = null;
     }
     if (nombre == "") {
-        nombre = null;    
+        nombre = null;
     }
     if (celular == "") {
-        celular = null;    
+        celular = null;
     }
     await connection.query('UPDATE usuarios SET nombre = IFNULL(?, nombre), celular = IFNULL(?, celular), documento = IFNULL(?, documento) WHERE codigo = ?', [nombre, celular, documento, codigo])
 
 
     const [rows] = await connection.query('SELECT * FROM usuarios WHERE codigo = ?', [codigo])
 
-    res.status(200).json({rta:"Todo bien"})
-    
+    res.status(200).json({ rta: "Todo bien" })
+
 }
 
 export const cambioContrasena = async (req, res) => {
@@ -92,8 +92,39 @@ export const cambioContrasena = async (req, res) => {
 
     await connection.query('UPDATE usuarios SET contrasena = ? WHERE codigo = ?', [contrasena, codigo])
 
-    res.status(200).json({rta:"Todo bien"})
+    res.status(200).json({ rta: "Todo bien" })
 }
+
+export const fechaDeHoy = async (req,res) => {
+    let connection;
+
+    let fechaDeHoy = new Date();
+    let año = (fechaDeHoy.getFullYear()).toString();
+    let dia = (fechaDeHoy.getDate()).toString();
+    let mes = (fechaDeHoy.getMonth() + 1).toString();
+    let fecha = `${dia}/${mes}/${año}`;
+    
+    try {
+        connection = await pool.getConnection();
+
+        let fechaSemestre = await connection.query('SELECT id_semestre FROM semestre WHERE STR_TO_DATE(?, "%d/%m/%Y") BETWEEN STR_TO_DATE(fechaInicio, "%d/%m/%Y")  AND STR_TO_DATE(fechaFinalizacion, "%d/%m/%Y")',[fecha]);
+
+        const hoy = fechaSemestre[0][0];
+        res.status(200).json({hoy:hoy.id_semestre})
+        
+        await connection.commit();
+
+    } catch (error) {
+        console.error('Error al obtener la conexión:', error);
+       
+    } finally {
+        if (connection) {
+            connection.release(); // Asegúrate de liberar la conexión en todos los casos
+        }
+    }
+
+}
+
 
 export const nuevosUsuarios = async (req, res) => {
     const connection = await pool.getConnection();
@@ -182,7 +213,7 @@ export const proyectos = async (req, res) => {
         // const proyectos = req.body;
 
         await connection.beginTransaction();
-        
+
         const id_materia = req.body.id_materia
         const nombre = req.body.nombre
         const integrantes = req.body.integrantes
@@ -193,7 +224,7 @@ export const proyectos = async (req, res) => {
 
         // const { id_materia, nombre, integrantes, descripcion,id_semestre_proyecto } = proyecto;
         await connection.query(`INSERT INTO proyecto (id_materia, nombre, integrantes, descripcion, id_semestre_proyecto) VALUES (?,?,?,?,?)`,
-        [id_materia, nombre, integrantes, descripcion, id_semestre_proyecto]);
+            [id_materia, nombre, integrantes, descripcion, id_semestre_proyecto]);
 
 
         await connection.commit();
