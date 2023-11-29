@@ -79,9 +79,15 @@ export const actualizarUsuarios = async (req, res) => {
     await connection.query('UPDATE usuarios SET nombre = IFNULL(?, nombre), celular = IFNULL(?, celular), documento = IFNULL(?, documento) WHERE codigo = ?', [nombre, celular, documento, codigo])
 
 
-    const [rows] = await connection.query('SELECT * FROM usuarios WHERE codigo = ?', [codigo])
+    const datos = await connection.query('SELECT * FROM usuarios WHERE codigo = ?', [codigo])
+    if (datos[0].length >= 1) {
 
-    res.status(200).json({ rta: "Todo bien" })
+        nombre = datos[0][0].nombre;
+        celular = datos[0][0].celular;
+        documento = datos[0][0].documento;
+    }
+
+    res.status(200).json({ nombre:nombre, celular:celular, documento:documento })
 
 }
 
@@ -95,7 +101,7 @@ export const cambioContrasena = async (req, res) => {
     res.status(200).json({ rta: "Todo bien" })
 }
 
-export const fechaDeHoy = async (req,res) => {
+export const fechaDeHoy = async (req, res) => {
     let connection;
 
     let fechaDeHoy = new Date();
@@ -103,20 +109,20 @@ export const fechaDeHoy = async (req,res) => {
     let dia = (fechaDeHoy.getDate()).toString();
     let mes = (fechaDeHoy.getMonth() + 1).toString();
     let fecha = `${dia}/${mes}/${año}`;
-    
+
     try {
         connection = await pool.getConnection();
 
-        let fechaSemestre = await connection.query('SELECT id_semestre FROM semestre WHERE STR_TO_DATE(?, "%d/%m/%Y") BETWEEN STR_TO_DATE(fechaInicio, "%d/%m/%Y")  AND STR_TO_DATE(fechaFinalizacion, "%d/%m/%Y")',[fecha]);
+        let fechaSemestre = await connection.query('SELECT id_semestre FROM semestre WHERE STR_TO_DATE(?, "%d/%m/%Y") BETWEEN STR_TO_DATE(fechaInicio, "%d/%m/%Y")  AND STR_TO_DATE(fechaFinalizacion, "%d/%m/%Y")', [fecha]);
 
         const hoy = fechaSemestre[0][0];
-        res.status(200).json({hoy:hoy.id_semestre})
-        
+        res.status(200).json({ hoy: hoy.id_semestre })
+
         await connection.commit();
 
     } catch (error) {
         console.error('Error al obtener la conexión:', error);
-       
+
     } finally {
         if (connection) {
             connection.release(); // Asegúrate de liberar la conexión en todos los casos
@@ -257,7 +263,7 @@ export const getFecha = async (req, res) => {
             fin = results[0][0].fechaFinalizacion;
         }
 
-        res.status(200).json({ inicio:inicio, fin:fin });
+        res.status(200).json({ inicio: inicio, fin: fin });
 
     } catch (error) {
         await connection.rollback();

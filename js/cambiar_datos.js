@@ -6,9 +6,9 @@ document.addEventListener("DOMContentLoaded", function () {
         const nombre = document.getElementById("nombre").value;
         const celular = document.getElementById("celular").value;
         const documento = document.getElementById("cedula").value;
-        
+
         const usuario = JSON.parse(localStorage.getItem("infoUser"));
-        
+
         const codigo = usuario.codigo;
         const body = {
             nombre: nombre,
@@ -26,14 +26,17 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
         });
-        const data = await response.json();
-        console.log(data);
+        const datosNuevos = await response.json();
+        console.log(datosNuevos);
 
-        if(response.status==200){
+
+        if (response.status == 200) {
+
+            localStorage.setItem("infoNew", JSON.stringify(datosNuevos))
             alert("Datos cambiados con exito");
         }
-        else{
-             alert("Ocurrio un error");
+        else {
+            alert("Ocurrio un error");
         }
 
         document.getElementById("nombre").value = "";
@@ -41,3 +44,10 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("cedula").value = "";
     });
 });
+
+function limpiarLocalStorage() {
+    localStorage.clear();
+    
+}
+
+document.getElementById('cerrar').addEventListener('click', limpiarLocalStorage);
