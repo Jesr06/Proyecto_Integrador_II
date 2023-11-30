@@ -4,11 +4,11 @@ import { nuevosUsuarios } from "../controllers/usuarios.controllers.js";
 import { nuevasMaterias } from "../controllers/usuarios.controllers.js";
 import { actualizarUsuarios } from "../controllers/usuarios.controllers.js";
 import { cambioContrasena  } from "../controllers/usuarios.controllers.js";
-import { eliminarUsuarios } from "../controllers/usuarios.controllers.js";
 import { proyectos } from "../controllers/usuarios.controllers.js";
 import { getSemestre } from "../controllers/usuarios.controllers.js";
 import { fechaDeHoy } from "../controllers/usuarios.controllers.js";
 import { getFecha } from "../controllers/usuarios.controllers.js";
+import { buscarMaterias } from "../controllers/usuarios.controllers.js";
 
 const router = Router()
 
@@ -24,12 +24,12 @@ router.patch('/actu', cambioContrasena)
 
 router.post('/proyectos', proyectos )
 
-router.delete('/delete', eliminarUsuarios)
-
 router.post('/semestre', getSemestre)
 
 router.get('/fechaDeHoy', fechaDeHoy)
 
 router.post('/fechas', getFecha)
+
+router.get('/buscarMaterias', buscarMaterias)
 
 export default router

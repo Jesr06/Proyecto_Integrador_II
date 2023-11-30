@@ -276,4 +276,56 @@ export const getFecha = async (req, res) => {
 }
 
 
-export const eliminarUsuarios = (req, res) => res.send('Eliminando usuarios')
+export const buscarMaterias = async (req, res) => {
+    const connection = await pool.getConnection();
+    console.log(req.body)
+    try {
+
+        const materia = req.body.materia;
+        const semestre = req.body.semestre;
+
+
+        const materias = 'SELECT * FROM proyecto WHERE id_materia = ?';
+        const semestres = 'SELECT * FROM proyecto WHERE id_materia = ?';
+        const materiaYsemestre = 'SELECT * FROM proyecto WHERE id_materia = ? AND id_semestre_proyecto =?';
+
+
+        if (semestre == "") {
+            // El usuario se autenticó correctamente
+            console.log("Semestre vacio");
+            const results = await connection.query(materias, [materia]);
+            res.status(200).json({
+                results: results
+            })
+
+        } else if (materia == "") {
+            console.log("Materia vacia");
+            const results = await connection.query(semestres, [semestre]);
+            res.status(200).json({
+                results: results
+            })
+        } else if (materia !="" && semestre!="") {
+            console.log("No hay datos vacios");
+            const results = await connection.query(materiaYsemestre, [materia , semestre]);
+            res.status(200).json({
+                results: results
+            })
+        } else {
+            // Datos incorrectos
+            console.log("1er Datos incorrectos o no encontrados");
+
+            res.status(401).json({ message: "2do Datos incorrectos o no encontrados" });
+        }
+
+       
+
+
+
+
+    } catch (error) {
+        console.error('Error de consulta:', error);
+        return res.status(500).json({
+            message: 'Error interno del servidor al realizar la consulta'
+        });
+    }
+}
