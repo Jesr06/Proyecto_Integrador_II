@@ -8,6 +8,7 @@ import { eliminarUsuarios } from "../controllers/usuarios.controllers.js";
 import { proyectos } from "../controllers/usuarios.controllers.js";
 import { getSemestre } from "../controllers/usuarios.controllers.js";
 import { fechaDeHoy } from "../controllers/usuarios.controllers.js";
+import { getFecha } from "../controllers/usuarios.controllers.js";
 
 const router = Router()
 
@@ -28,5 +29,7 @@ router.delete('/delete', eliminarUsuarios)
 router.post('/semestre', getSemestre)
 
 router.get('/fechaDeHoy', fechaDeHoy)
+
+router.post('/fechas', getFecha)
 
 export default router

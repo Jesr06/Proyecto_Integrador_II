@@ -242,5 +242,32 @@ export const proyectos = async (req, res) => {
     }
 }
 
+export const getFecha = async (req, res) => {
+    const connection = await pool.getConnection();
+    let inicio;
+    let fin;
+    console.log(req.body)
+    try {
+        const id = req.body.id;
+
+        const results = await connection.query('SELECT * FROM semestre WHERE id_semestre = ?', [id]);
+
+        if (results[0].length >= 1) {
+            inicio = results[0][0].fechaInicio;
+            fin = results[0][0].fechaFinalizacion;
+        }
+
+        res.status(200).json({ inicio:inicio, fin:fin });
+
+    } catch (error) {
+        await connection.rollback();
+        return res.status(500).json({
+            message: 'Algo ha salido mal al intentar cargar el semestre'
+        });
+    } finally {
+        connection.release();
+    }
+}
+
 
 export const eliminarUsuarios = (req, res) => res.send('Eliminando usuarios')
