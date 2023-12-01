@@ -12,7 +12,7 @@ app.use(cors());
 
 
 const corsOptions = {
-    origin: 'http://127.0.0.1:5502', // Permite solo solicitudes desde este origen
+    origin: 'http://127.0.0.1:5501', // Permite solo solicitudes desde este origen
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Métodos HTTP permitidos
     credentials: true, // Permite el envío de credenciales (por ejemplo, cookies) en la solicitud
     optionsSuccessStatus: 204 // Devuelve un código de estado 204 en las respuestas OPTIONS
