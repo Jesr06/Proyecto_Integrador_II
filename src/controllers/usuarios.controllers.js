@@ -81,7 +81,7 @@ export const actualizarUsuarios = async (req, res) => {
 
     const datos = await connection.query('SELECT * FROM usuarios WHERE codigo = ?', [codigo])
     if (datos[0].length >= 1) {
-
+        //Datos nuevos que actualiza el usuario
         nombre = datos[0][0].nombre;
         celular = datos[0][0].celular;
         documento = datos[0][0].documento;
