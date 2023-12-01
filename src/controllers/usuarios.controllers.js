@@ -95,7 +95,7 @@ export const cambioContrasena = async (req, res) => {
     res.status(200).json({ rta: "Todo bien" })
 }
 
-export const fechaDeHoy = async (req,res) => {
+export const fechaDeHoy = async (req, res) => {
     let connection;
 
     let fechaDeHoy = new Date();
@@ -103,20 +103,20 @@ export const fechaDeHoy = async (req,res) => {
     let dia = (fechaDeHoy.getDate()).toString();
     let mes = (fechaDeHoy.getMonth() + 1).toString();
     let fecha = `${dia}/${mes}/${año}`;
-    
+
     try {
         connection = await pool.getConnection();
 
-        let fechaSemestre = await connection.query('SELECT id_semestre FROM semestre WHERE STR_TO_DATE(?, "%d/%m/%Y") BETWEEN STR_TO_DATE(fechaInicio, "%d/%m/%Y")  AND STR_TO_DATE(fechaFinalizacion, "%d/%m/%Y")',[fecha]);
+        let fechaSemestre = await connection.query('SELECT id_semestre FROM semestre WHERE STR_TO_DATE(?, "%d/%m/%Y") BETWEEN STR_TO_DATE(fechaInicio, "%d/%m/%Y")  AND STR_TO_DATE(fechaFinalizacion, "%d/%m/%Y")', [fecha]);
 
         const hoy = fechaSemestre[0][0];
-        res.status(200).json({hoy:hoy.id_semestre})
-        
+        res.status(200).json({ hoy: hoy.id_semestre })
+
         await connection.commit();
 
     } catch (error) {
         console.error('Error al obtener la conexión:', error);
-       
+
     } finally {
         if (connection) {
             connection.release(); // Asegúrate de liberar la conexión en todos los casos
@@ -257,7 +257,7 @@ export const getFecha = async (req, res) => {
             fin = results[0][0].fechaFinalizacion;
         }
 
-        res.status(200).json({ inicio:inicio, fin:fin });
+        res.status(200).json({ inicio: inicio, fin: fin });
 
     } catch (error) {
         await connection.rollback();
@@ -270,4 +270,56 @@ export const getFecha = async (req, res) => {
 }
 
 
-export const eliminarUsuarios = (req, res) => res.send('Eliminando usuarios')
+export const buscarMaterias = async (req, res) => {
+    const connection = await pool.getConnection();
+    console.log(req.body)
+    try {
+
+        const materia = req.body.materia;
+        const semestre = req.body.semestre;
+
+
+        const materias = 'SELECT * FROM proyecto WHERE id_materia = ?';
+        const semestres = 'SELECT * FROM proyecto WHERE id_materia = ?';
+        const materiaYsemestre = 'SELECT * FROM proyecto WHERE id_materia = ? AND id_semestre_proyecto =?';
+
+
+        if (semestre == "") {
+            // El usuario se autenticó correctamente
+            console.log("Semestre vacio");
+            const results = await connection.query(materias, [materia]);
+            res.status(200).json({
+                results: results
+            })
+
+        } else if (materia == "") {
+            console.log("Materia vacia");
+            const results = await connection.query(semestres, [semestre]);
+            res.status(200).json({
+                results: results
+            })
+        } else if (materia !="" && semestre!="") {
+            console.log("No hay datos vacios");
+            const results = await connection.query(materiaYsemestre, [materia , semestre]);
+            res.status(200).json({
+                results: results
+            })
+        } else {
+            // Datos incorrectos
+            console.log("1er Datos incorrectos o no encontrados");
+
+            res.status(401).json({ message: "2do Datos incorrectos o no encontrados" });
+        }
+
+       
+
+
+
+
+    } catch (error) {
+        console.error('Error de consulta:', error);
+        return res.status(500).json({
+            message: 'Error interno del servidor al realizar la consulta'
+        });
+    }
+}

@@ -1,13 +1,13 @@
 document.addEventListener("DOMContentLoaded", function () {
-    
+
     document.getElementById('semestre').addEventListener('click', async (event) => {
 
         console.log("algo")
-        
+
         const id = document.getElementById("ID_sem").value;
         const inicio = document.getElementById("inicio_sem").value;
         const fin = document.getElementById("fin_sem").value;
-        
+
         const body = {
             inicio: inicio,
             id: id,
@@ -22,21 +22,20 @@ document.addEventListener("DOMContentLoaded", function () {
                 'Content-Type': 'application/json'
             }
 
-        
+
 
         });
         const data = await response.json()
 
-       if(response.status==200){
-           alert("Semestre cargado")
-       }
-       else{
+        if (response.status == 200) {
+            alert("Semestre cargado")
+        }
+        else {
             alert("Credenciales incorrectas");
-       }
+        }
 
         document.getElementById("ID_sem").value = "";
         document.getElementById("inicio_sem").value = "";
         document.getElementById("fin_sem").value = "";
     });
 });
-   
