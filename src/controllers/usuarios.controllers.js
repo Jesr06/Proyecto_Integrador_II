@@ -87,7 +87,7 @@ export const actualizarUsuarios = async (req, res) => {
         documento = datos[0][0].documento;
     }
 
-    res.status(200).json({ nombre:nombre, celular:celular, documento:documento })
+    res.status(200).json({ nombre: nombre, celular: celular, documento: documento })
 
 }
 
@@ -286,38 +286,43 @@ export const buscarMaterias = async (req, res) => {
 
 
         const materias = 'SELECT * FROM proyecto WHERE id_materia = ?';
-        const semestres = 'SELECT * FROM proyecto WHERE id_materia = ?';
+        const semestres = 'SELECT * FROM proyecto WHERE id_semestre_proyecto = ?';
         const materiaYsemestre = 'SELECT * FROM proyecto WHERE id_materia = ? AND id_semestre_proyecto =?';
+        const todo = 'SELECT * FROM proyecto'
 
-
-        if (semestre == "") {
+        if (materia == "" && semestre == "") {
+            console.log("Ambos datos vacios");
+            const results = await connection.query(todo);
+            res.status(200).json({
+                results: results
+            })
+        } else if (materia == "" && semestre !="") {
+            console.log("Materia vacia");
+            const results = await connection.query(semestres, [semestre]);
+            res.status(200).json({
+                results: results
+            })
+        } else if (materia != "" && semestre != "") {
+            console.log("No hay datos vacios");
+            const results = await connection.query(materiaYsemestre, [materia, semestre]);
+            res.status(200).json({
+                results: results
+            })
+        }else if (semestre == "" && materia != "") {
             // El usuario se autenticó correctamente
             console.log("Semestre vacio");
             const results = await connection.query(materias, [materia]);
             res.status(200).json({
                 results: results
             })
-
-        } else if (materia == "") {
-            console.log("Materia vacia");
-            const results = await connection.query(semestres, [semestre]);
-            res.status(200).json({
-                results: results
-            })
-        } else if (materia !="" && semestre!="") {
-            console.log("No hay datos vacios");
-            const results = await connection.query(materiaYsemestre, [materia , semestre]);
-            res.status(200).json({
-                results: results
-            })
         } else {
             // Datos incorrectos
             console.log("1er Datos incorrectos o no encontrados");
-
+            
             res.status(401).json({ message: "2do Datos incorrectos o no encontrados" });
         }
 
-       
+
 
 
 

@@ -30,6 +30,6 @@ router.get('/fechaDeHoy', fechaDeHoy)
 
 router.post('/fechas', getFecha)
 
-router.get('/buscarMaterias', buscarMaterias)
+router.post('/buscar', buscarMaterias)
 
 export default router
