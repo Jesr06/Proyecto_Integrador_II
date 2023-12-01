@@ -55,3 +55,13 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+.cajaProyecto{
+    max-width:930px;
+    min-height: 200px;
+    border: 2px dashed #dc3545;
+    margin: 5px;
+    padding: 5px;
+}
+.TextoAtributo{
+    font-weight: bold;
+}
