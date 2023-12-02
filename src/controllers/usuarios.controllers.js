@@ -236,6 +236,7 @@ export const proyectos = async (req, res) => {
         await connection.commit();
         res.status(200).json({ rta: "el proyecto ha sido cargado" });
         console.log("Cargo");
+
     } catch (error) {
         console.log("Entro al error");
         await connection.rollback();
@@ -296,7 +297,7 @@ export const buscarMaterias = async (req, res) => {
             res.status(200).json({
                 results: results
             })
-        } else if (materia == "" && semestre !="") {
+        } else if (materia == "" && semestre != "") {
             console.log("Materia vacia");
             const results = await connection.query(semestres, [semestre]);
             res.status(200).json({
@@ -308,7 +309,7 @@ export const buscarMaterias = async (req, res) => {
             res.status(200).json({
                 results: results
             })
-        }else if (semestre == "" && materia != "") {
+        } else if (semestre == "" && materia != "") {
             // El usuario se autenticó correctamente
             console.log("Semestre vacio");
             const results = await connection.query(materias, [materia]);
@@ -318,12 +319,41 @@ export const buscarMaterias = async (req, res) => {
         } else {
             // Datos incorrectos
             console.log("1er Datos incorrectos o no encontrados");
-            
+
             res.status(401).json({ message: "2do Datos incorrectos o no encontrados" });
         }
 
 
 
+
+
+
+    } catch (error) {
+        console.error('Error de consulta:', error);
+        return res.status(500).json({
+            message: 'Error interno del servidor al realizar la consulta'
+        });
+    }
+}
+
+
+export const materiasProfesor = async (req, res) => {
+    const connection = await pool.getConnection();
+    console.log(req.body)
+    try {
+
+        const codigo = req.body.codigo;
+
+
+        const results = await connection.query(`SELECT * FROM materia WHERE codigo_profesor = ?`, [codigo]);
+
+
+        await connection.commit();
+
+        res.status(200).json({
+            results: results
+        })
+        console.log("Cargo");
 
 
 

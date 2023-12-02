@@ -131,13 +131,13 @@
 }
 
 .container .cont_acciones .mat_asociadas {
-    display: flex;
+    display: block;
     border: 2px solid #dc3545;
     padding: 5rem;
     position: relative;
     
 }
-.container .cont_acciones .mat_asociadas .mate a{
+/* .container .cont_acciones .mat_asociadas .mate a{
     font-size: 20px;
     color: black;
     text-decoration: none;
@@ -148,7 +148,7 @@
     padding-left: 10px;
    
     
-}
+} */
 
 
 
@@ -171,3 +171,18 @@
     border: none;
 }
 
+.cajaMateria{
+    font-size: 20px;
+    text-decoration: none;
+    font-weight: bold;
+    display: block;
+    max-width:auto;
+    min-height: 50px;
+}
+
+.textoMateria{
+    color: #dc3545;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 50px;
+}

@@ -5,6 +5,7 @@ document.getElementById("codigo").value = localStorage.getItem("materiaAsociada"
 document.getElementById("codigo").disabled = true;
 document.getElementById("semestre").disabled = true;
 let fechaHoy;
+
 const fechaDeHoyPtm = async () => {
     const responseHOY = await fetch('http://localhost:5500/api/fechaDeHoy', {
         method: 'GET',

@@ -9,6 +9,7 @@ import { getSemestre } from "../controllers/usuarios.controllers.js";
 import { fechaDeHoy } from "../controllers/usuarios.controllers.js";
 import { getFecha } from "../controllers/usuarios.controllers.js";
 import { buscarMaterias } from "../controllers/usuarios.controllers.js";
+import { materiasProfesor } from "../controllers/usuarios.controllers.js";
 
 const router = Router()
 
@@ -31,5 +32,7 @@ router.get('/fechaDeHoy', fechaDeHoy)
 router.post('/fechas', getFecha)
 
 router.post('/buscar', buscarMaterias)
+
+router.post('/materiasProfesor', materiasProfesor)
 
 export default router
