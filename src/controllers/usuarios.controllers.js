@@ -101,22 +101,52 @@ export const cambioContrasena = async (req, res) => {
     res.status(200).json({ rta: "Todo bien" })
 }
 
+// export const fechaDeHoy = async (req, res) => {
+//     let connection;
+
+//     let fechaDeHoy = new Date();
+//     let año = (fechaDeHoy.getFullYear()).toString();
+//     let dia = (fechaDeHoy.getDate()).toString();
+//     let mes = (fechaDeHoy.getMonth() + 1).toString();
+//     let fecha = `${dia}/${mes}/${año}`;
+
+//     try {
+//         connection = await pool.getConnection();
+
+//         let fechaSemestre = await connection.query('SELECT id_semestre FROM semestre WHERE STR_TO_DATE(?, "%d/%m/%Y") BETWEEN STR_TO_DATE(fechaInicio, "%d/%m/%Y")  AND STR_TO_DATE(fechaFinalizacion, "%d/%m/%Y")', [fecha]);
+
+//         const hoy = fechaSemestre[0][0];
+//         res.status(200).json({ hoy: hoy.id_semestre })
+
+//         await connection.commit();
+
+//     } catch (error) {
+//         console.error('Error al obtener la conexión:', error);
+
+//     } finally {
+//         if (connection) {
+//             connection.release(); // Asegúrate de liberar la conexión en todos los casos
+//         }
+//     }
+
+// }
+
 export const fechaDeHoy = async (req, res) => {
     let connection;
 
     let fechaDeHoy = new Date();
-    let año = (fechaDeHoy.getFullYear()).toString();
-    let dia = (fechaDeHoy.getDate()).toString();
-    let mes = (fechaDeHoy.getMonth() + 1).toString();
-    let fecha = `${dia}/${mes}/${año}`;
+    let año = fechaDeHoy.getFullYear().toString();
+    let dia = ('0' + fechaDeHoy.getDate()).slice(-2); // Agrega cero delante si es necesario
+    let mes = ('0' + (fechaDeHoy.getMonth() + 1)).slice(-2); // Agrega cero delante si es necesario
+    let fecha = `${año}-${mes}-${dia}`;
 
     try {
         connection = await pool.getConnection();
 
-        let fechaSemestre = await connection.query('SELECT id_semestre FROM semestre WHERE STR_TO_DATE(?, "%d/%m/%Y") BETWEEN STR_TO_DATE(fechaInicio, "%d/%m/%Y")  AND STR_TO_DATE(fechaFinalizacion, "%d/%m/%Y")', [fecha]);
+        let fechaSemestre = await connection.query('SELECT id_semestre FROM semestre WHERE STR_TO_DATE(?, "%Y-%m-%d") BETWEEN STR_TO_DATE(fechaInicio, "%Y-%m-%d")  AND STR_TO_DATE(fechaFinalizacion, "%Y-%m-%d")', [fecha]);
 
         const hoy = fechaSemestre[0][0];
-        res.status(200).json({ hoy: hoy.id_semestre })
+        res.status(200).json({ hoy: hoy.id_semestre });
 
         await connection.commit();
 
@@ -128,8 +158,8 @@ export const fechaDeHoy = async (req, res) => {
             connection.release(); // Asegúrate de liberar la conexión en todos los casos
         }
     }
+};
 
-}
 
 
 export const nuevosUsuarios = async (req, res) => {
