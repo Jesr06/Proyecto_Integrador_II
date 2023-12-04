@@ -29,7 +29,7 @@ router.post('/semestre', getSemestre)
 
 router.get('/fechaDeHoy', fechaDeHoy)
 
-router.post('/fechas', getFecha)
+router.get('/fechas', getFecha)
 
 router.post('/buscar', buscarMaterias)
 

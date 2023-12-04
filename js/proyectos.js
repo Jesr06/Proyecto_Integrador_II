@@ -27,7 +27,7 @@ const fechaDeHoyPtm = async () => {
 }
 
 fechaDeHoyPtm();
-console.log(fechaHoy);
+
 
 
 

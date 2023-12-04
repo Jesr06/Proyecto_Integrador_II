@@ -25,17 +25,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         });
-        const data = await response.json()
+        const data= await response.json();
 
         if (response.status == 200) {
+            
             alert("Semestre cargado")
         }
         else {
-            alert("Credenciales incorrectas");
+            alert("Semestre no cargado");
         }
 
         document.getElementById("ID_sem").value = "";
         document.getElementById("inicio_sem").value = "";
         document.getElementById("fin_sem").value = "";
+
+        
     });
 });
