@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
         const data = await response.json()
 
-        if (response.ok) {
+        if (response.status==200) {
             alert("proyecto cargado")
         }
         else {
