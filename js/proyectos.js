@@ -19,7 +19,7 @@ const fechaDeHoyPtm = async () => {
 
     const dataHOY = await responseHOY.json()
     // console.log(dataHOY.hoy.id_semestre);
-    const fechaUtil =  dataHOY.hoy
+    const fechaUtil = dataHOY.hoy
     console.log(fechaUtil);
     fechaHoy = fechaUtil;
     document.getElementById("semestre").value = fechaUtil
@@ -36,7 +36,7 @@ fechaDeHoyPtm();
 document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById('enviarProyecto').addEventListener('click', async (event) => {
-
+        
         console.log("algo")
 
         const codMateria = document.getElementById("codigo").value;
@@ -45,39 +45,55 @@ document.addEventListener("DOMContentLoaded", function () {
         const descripcion = document.getElementById("descipcion").value;
         const semestre = document.getElementById("semestre").value;
 
-        const body = {
-            id_materia: codMateria,
-            nombre: nombre,
-            integrantes: integrantes,
-            descripcion: descripcion,
-            id_semestre_proyecto: semestre
-        }
 
-        const response = await fetch('http://localhost:5500/api/proyectos', {
-            method: 'POST',
-            body: JSON.stringify(body),
-            cache: 'default',
-            headers: {
-                'Content-Type': 'application/json'
+        const inputArchivo = document.getElementById('documentos');
+        const archivo = inputArchivo.files[0];
+
+        if (archivo) {
+            const formData = new FormData();
+            formData.append('archivo', archivo);
+            formData.append('id_materia', codMateria);
+            formData.append('nombre', nombre);
+            formData.append('integrantes', integrantes);
+            formData.append('descripcion', descripcion);
+            formData.append('semestre', semestre);
+
+
+
+            const response = await fetch('http://localhost:5500/api/proyectos', {
+                method: 'POST',
+                body: formData,
+                cache: 'default',
+
+
+
+
+            });
+
+            const formDataObj = {};
+            formData.forEach((valor, clave) => {
+                formDataObj[clave] = valor;
+            });
+
+            // Imprimir el objeto resultante
+            console.log(archivo);
+
+
+            if (response.status == 200) {
+                alert("proyecto cargado")
+            }
+            else {
+                console.error("Error en la respuesta del servidor:", data.message);
+                alert("Datos incorrectos");
             }
 
-
-
-        });
-        const data = await response.json()
-
-        if (response.status==200) {
-            alert("proyecto cargado")
+            document.getElementById("codigo").value = "";
+            document.getElementById("nombre").value = "";
+            document.getElementById("Integrantes").value = "";
+            document.getElementById("descipcion").value = "";
+            document.getElementById("semestre").value = "";
+        }else{
+            alert("Debe cargar un documento");
         }
-        else {
-            console.error("Error en la respuesta del servidor:", data.message);
-            alert("Datos incorrectos");
-        }
-
-        document.getElementById("codigo").value = "";
-        document.getElementById("nombre").value = "";
-        document.getElementById("Integrantes").value = "";
-        document.getElementById("descipcion").value = "";
-        document.getElementById("semestre").value = "";
     });
 });

@@ -2,7 +2,7 @@ import express from 'express'
 import usuariosRoutes from "./routes/usuarios.routes.js";
 import indexRoutes from "./routes/index.routes.js";
 import cors from 'cors'; // Importa el paquete cors usando ES6 import
-
+import bodyParser from 'body-parser';
 //esto tmbien es del video
 const app = express()
 //
@@ -22,7 +22,7 @@ app.use(cors(corsOptions));
 
 app.options('*', cors()); // Habilita las solicitudes OPTIONS para todas las rutas
 
-
+app.use(bodyParser.json({limit: '35mb'}));
 
 //cosas estandar del video
 

@@ -1,6 +1,6 @@
 
 import { pool } from "../db.js";
-
+import {uploadImage} from "../../js/cloudinary.js";
 
 export const getlogin = async (req, res) => {
     const connection = await pool.getConnection();
@@ -48,7 +48,7 @@ export const getlogin = async (req, res) => {
             // Las credenciales son incorrectas
             console.log("Credenciales incorrectas");
 
-            res.status(401).json({ message: "Credenciales incorrectas" ,autenticado:autenticado});
+            res.status(401).json({ message: "Credenciales incorrectas", autenticado: autenticado });
 
         }
 
@@ -215,31 +215,36 @@ export const getSemestre = async (req, res) => {
 
 export const proyectos = async (req, res) => {
     const connection = await pool.getConnection();
+    const archivoName = req.file.filename.split('.')[0];;
+    console.log(archivoName);
+    console.log(req.body);
     try {
-        console.log('Solicitud POST recibida en /proyectos');
-        // const proyectos = req.body;
 
+        const result = await uploadImage(req.file.path,archivoName);
+        
         await connection.beginTransaction();
 
+        const documento = result.secure_url
         const id_materia = req.body.id_materia
         const nombre = req.body.nombre
         const integrantes = req.body.integrantes
         const descripcion = req.body.descripcion
-        const id_semestre_proyecto = req.body.id_semestre_proyecto
-        // const sql2 = 'INSERT INTO proyecto (id_materia, nombre, integrantes, descripcion, id_semestre_proyecto) VALUES (?,?,?,?,?)';
+        const id_semestre_proyecto = req.body.semestre
 
 
-        // const { id_materia, nombre, integrantes, descripcion,id_semestre_proyecto } = proyecto;
-        await connection.query(`INSERT INTO proyecto (id_materia, nombre, integrantes, descripcion, id_semestre_proyecto) VALUES (?,?,?,?,?)`,
-            [id_materia, nombre, integrantes, descripcion, id_semestre_proyecto]);
+
+        
+        await connection.query(`INSERT INTO proyecto (id_materia, nombre, integrantes, descripcion, documentos, id_semestre_proyecto) VALUES (?,?,?,?,?,?)`,
+            [id_materia, nombre, integrantes, descripcion,documento, id_semestre_proyecto, ]);
 
 
         await connection.commit();
         res.status(200).json({ rta: "el proyecto ha sido cargado" });
-        console.log("Cargo");
-
+        
+         
     } catch (error) {
         console.log("Entro al error");
+        console.log(error);
         await connection.rollback();
         return res.status(500).json({
             error: 'Error al insertar el proyecto en la base de datos',
@@ -265,11 +270,11 @@ export const getFecha = async (req, res) => {
         let fechaSemestre = await connection.query('SELECT * FROM semestre WHERE STR_TO_DATE(?, "%Y-%m-%d") BETWEEN STR_TO_DATE(fechaInicio, "%Y-%m-%d")  AND STR_TO_DATE(fechaFinalizacion, "%Y-%m-%d")', [fecha]);
 
         const inicio = fechaSemestre[0][0].fechaInicio;
-        const final= fechaSemestre[0][0].fechaFinalizacion;
+        const final = fechaSemestre[0][0].fechaFinalizacion;
 
-        res.status(200).json({ inicio:inicio,final:final });
-        
-        
+        res.status(200).json({ inicio: inicio, final: final });
+
+
 
         await connection.commit();
 

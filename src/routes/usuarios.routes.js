@@ -11,6 +11,10 @@ import { getFecha } from "../controllers/usuarios.controllers.js";
 import { buscarMaterias } from "../controllers/usuarios.controllers.js";
 import { materiasProfesor } from "../controllers/usuarios.controllers.js";
 
+
+import multer from 'multer';
+
+
 const router = Router()
 
 router.post('/consultar',getlogin )
@@ -23,7 +27,23 @@ router.patch('/act', actualizarUsuarios)
 
 router.patch('/actu', cambioContrasena)
 
-router.post('/proyectos', proyectos )
+const multerStorage = multer.diskStorage({
+    
+    filename: (req, file, cb) => {
+        
+        const fileName = file.originalname;
+
+        cb(null, fileName);
+        
+        
+    }
+
+});
+const upload = multer({
+    storage: multerStorage
+});
+
+router.post('/proyectos',upload.single('archivo'), proyectos  )
 
 router.post('/semestre', getSemestre)
 
@@ -34,5 +54,6 @@ router.get('/fechas', getFecha)
 router.post('/buscar', buscarMaterias)
 
 router.post('/materiasProfesor', materiasProfesor)
+
 
 export default router
