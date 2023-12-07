@@ -8,6 +8,9 @@
         rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" 
         crossorigin="anonymous">
     <link rel="stylesheet" href="../css/ver_proyecto.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    
 </head>
 <body>
     <div class="barra">
@@ -21,12 +24,25 @@
                 <input type="search" id="busquedaSemestre" name="search3" placeholder="Buscar por semestre"></input>
                 <input type="submit" id="buscarProyectos"  value="Buscar"></input>
             </form>
+            <button class="btn btn-danger" id="generar-pdf">Generar PDF</button>
         </div>
         <div class="resultados" id="resultados">
 
         </div>
     </div>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script> -->
     <script src="../js/autenticacion.js"></script>
-    <script src="../js/buscarProyectos.js"></script>
+    <script type="module" src="../js/buscarProyectos.js"></script>
+
+    <!-- <script>
+        document.getElementById('generar-pdf').addEventListener('click', function () {
+            // Llamar al endpoint del servidor para generar el PDF
+            fetch('http://localhost:5500/api/generar-pdf', { method: 'POST' })
+                .then(response => response.text())
+                .then(data => console.log(data))
+                .catch(error => console.error(error));
+        });
+    </script> -->
+
 </body>
 </html>

@@ -1,7 +1,14 @@
 
 import { pool } from "../db.js";
 import {uploadImage} from "../../js/cloudinary.js";
+// 
+import { jsPDF } from 'jspdf';
+import fs from 'fs';
+import PDFDocument from 'pdfkit';
+import path from 'path';
+// import 'jspdf-autotable'; // Asegúrate de importar el módulo autotable si lo necesitas
 
+// 
 export const getlogin = async (req, res) => {
     const connection = await pool.getConnection();
 
@@ -376,3 +383,70 @@ export const materiasProfesor = async (req, res) => {
         });
     }
 }
+
+///nuevo mierdero
+
+// export const generarPDF = async (req, res) => {
+//     try {
+//         // Obtener el contenido del div desde el cuerpo de la solicitud
+//         const { contenidoDiv } = req.body;
+
+//         // Obtener la ruta completa al directorio "Descargas"
+//         const scriptDir = path.dirname(new URL(import.meta.url).pathname);
+//         const descargasDir = path.join('C:\\Users\\Ryzen\\Downloads'); // Ajusta la ruta según la estructura de tu proyecto
+
+//         // Crear la carpeta "Descargas" si no existe
+//         if (!fs.existsSync(descargasDir)) {
+//             fs.mkdirSync(descargasDir);
+//         }
+
+//         // Configurar las opciones de pdfkit
+//         const outputPath = path.join(descargasDir, 'documento.pdf');
+//         const pdfDoc = new PDFDocument();
+
+//         // Crear el archivo PDF y escribir el contenido del div
+//         pdfDoc.pipe(fs.createWriteStream(outputPath));
+//         pdfDoc.text('Esto es el informe:');
+//         pdfDoc.text(contenidoDiv);
+
+//         // Finalizar el PDF
+//         pdfDoc.end();
+
+//         // Enviar la respuesta al cliente
+//         res.status(200).send('PDF generado y descargado con éxito.');
+//     } catch (error) {
+//         console.error('Error al generar el PDF:', error);
+//         res.status(500).send('Error al generar el PDF.');
+//     }
+// };
+
+
+
+export const generarPDF = async (req, res) => {
+    try {
+        // Obtener el contenido del div desde el cuerpo de la solicitud
+        const { contenidoDiv } = req.body;
+
+        // Configurar las opciones de pdfkit
+        const outputPath = 'documento.pdf';
+        const pdfDoc = new PDFDocument();
+
+        // Crear el archivo PDF y escribir el contenido del div
+        pdfDoc.pipe(fs.createWriteStream(outputPath));
+        pdfDoc.text('Esto es el informe:');
+        pdfDoc.text(contenidoDiv);
+
+        // Finalizar el PDF
+        pdfDoc.end();
+
+        // Enviar la respuesta al cliente
+        res.status(200).send('PDF generado y descargado con éxito.');
+    } catch (error) {
+        console.error('Error al generar el PDF:', error);
+        res.status(500).send('Error al generar el PDF.');
+    }
+};
+
+
+
+

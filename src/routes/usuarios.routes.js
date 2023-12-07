@@ -10,6 +10,7 @@ import { fechaDeHoy } from "../controllers/usuarios.controllers.js";
 import { getFecha } from "../controllers/usuarios.controllers.js";
 import { buscarMaterias } from "../controllers/usuarios.controllers.js";
 import { materiasProfesor } from "../controllers/usuarios.controllers.js";
+import { generarPDF } from "../controllers/usuarios.controllers.js";
 
 
 import multer from 'multer';
@@ -54,6 +55,8 @@ router.get('/fechas', getFecha)
 router.post('/buscar', buscarMaterias)
 
 router.post('/materiasProfesor', materiasProfesor)
+
+router.post('/generarPDF', generarPDF)
 
 
 export default router

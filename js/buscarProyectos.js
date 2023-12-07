@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
         while (resultadosDiv.firstChild) {
             resultadosDiv.removeChild(resultadosDiv.firstChild);
         }
-        
+
         const materia = document.getElementById('busquedaMateria').value;
         const semestre = document.getElementById('busquedaSemestre').value;
 
@@ -83,3 +83,50 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+
+document.getElementById('generar-pdf').addEventListener('click', async (event) => {
+    event.preventDefault();
+    try {
+        // Obtener el contenido del div
+        const contenidoDiv = document.getElementById('resultados').innerText;
+
+        // Llamar al endpoint del servidor para generar el PDF
+        const response = await fetch('http://localhost:5500/api/generarPDF', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ contenidoDiv }),
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error al llamar al servidor: ${response.statusText}`);
+        }
+
+        const data = await response.text();
+        console.log(data);
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+
+
+
+// document.getElementById('generar-pdf').addEventListener('click', async (event) => {
+//     event.preventDefault();
+//     try {
+//         // Llamar al endpoint del servidor para generar el PDF
+//         const response = await fetch('http://localhost:5500/api/generarPDF', { method: 'POST' });
+
+//         if (!response.ok) {
+//             throw new Error(`Error al llamar al servidor: ${response.statusText}`);
+//         }
+
+//         const data = await response.text();
+//         console.log(data);
+//     } catch (error) {
+//         console.error(error);
+//     }
+// });

@@ -3,6 +3,8 @@ import usuariosRoutes from "./routes/usuarios.routes.js";
 import indexRoutes from "./routes/index.routes.js";
 import cors from 'cors'; // Importa el paquete cors usando ES6 import
 import bodyParser from 'body-parser';
+//nuevo
+
 //esto tmbien es del video
 const app = express()
 //
