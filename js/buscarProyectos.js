@@ -1,9 +1,11 @@
 
 const resultadosDiv = document.getElementById("resultados")
 
+let contadorProyectos
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('buscarProyectos').addEventListener('click', async (event) => {
         event.preventDefault();
+        contadorProyectos =0;
         while (resultadosDiv.firstChild) {
             resultadosDiv.removeChild(resultadosDiv.firstChild);
         }
@@ -71,6 +73,8 @@ document.addEventListener("DOMContentLoaded", function () {
             cajaProyecto.appendChild(textoDocumentos);
 
             resultadosDiv.append(i + 1, cajaProyecto);
+
+            contadorProyectos++;
         }
 
 
@@ -89,7 +93,10 @@ document.getElementById('generar-pdf').addEventListener('click', async (event) =
     event.preventDefault();
     try {
         // Obtener el contenido del div
+        
         const contenidoDiv = document.getElementById('resultados').innerText;
+        const materia = document.getElementById('busquedaMateria').value;
+        const semestre = document.getElementById('busquedaSemestre').value;
 
         // Llamar al endpoint del servidor para generar el PDF
         const response = await fetch('http://localhost:5500/api/generarPDF', {
@@ -97,7 +104,7 @@ document.getElementById('generar-pdf').addEventListener('click', async (event) =
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ contenidoDiv }),
+            body: JSON.stringify({ contenidoDiv, materia, semestre, contadorProyectos }), // Include materia and semestre
         });
 
         if (!response.ok) {
@@ -112,13 +119,24 @@ document.getElementById('generar-pdf').addEventListener('click', async (event) =
 });
 
 
-
-
 // document.getElementById('generar-pdf').addEventListener('click', async (event) => {
 //     event.preventDefault();
 //     try {
+//         // Obtener el contenido del div
+
+//         const contenidoDiv = document.getElementById('resultados').innerText;
+//         const materia = document.getElementById('busquedaMateria').innerText;
+//         const semestre = document.getElementById('busquedaSemestre').innerText;
+
+        
 //         // Llamar al endpoint del servidor para generar el PDF
-//         const response = await fetch('http://localhost:5500/api/generarPDF', { method: 'POST' });
+//         const response = await fetch('http://localhost:5500/api/generarPDF', {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//             },
+//             body: JSON.stringify({ contenidoDiv }),
+//         });
 
 //         if (!response.ok) {
 //             throw new Error(`Error al llamar al servidor: ${response.statusText}`);
@@ -130,3 +148,7 @@ document.getElementById('generar-pdf').addEventListener('click', async (event) =
 //         console.error(error);
 //     }
 // });
+
+
+
+

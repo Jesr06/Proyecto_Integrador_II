@@ -424,28 +424,73 @@ export const materiasProfesor = async (req, res) => {
 
 export const generarPDF = async (req, res) => {
     try {
-        // Obtener el contenido del div desde el cuerpo de la solicitud
-        const { contenidoDiv } = req.body;
+        // Obtener el contenido del div, materia y semestre desde el cuerpo de la solicitud
+        const { contenidoDiv, materia, semestre, contadorProyectos } = req.body;
+
+        let fechaDeHoy = new Date();
+        let año = fechaDeHoy.getFullYear().toString();
+        let dia = fechaDeHoy.getDate().toString(); // Agrega cero delante si es necesario
+        let mes = fechaDeHoy.getMonth().toString(); // Agrega cero delante si es necesario
+        let horas = fechaDeHoy.getHours().toString(); // Agrega cero delante si es necesario
+        let minutos = fechaDeHoy.getMinutes().toString(); // Agrega cero delante si es necesario
+        let segundos = fechaDeHoy.getSeconds().toString(); // Agrega cero delante si es necesario
+        let fecha = `${año}_${mes + 1}_${dia}_${horas}_${minutos}_${segundos}`;
 
         // Configurar las opciones de pdfkit
-        const outputPath = 'documento.pdf';
+        
+        const outputPath = `informe${fecha}.pdf`
+ // Specify the path to the "pdfs" folder
         const pdfDoc = new PDFDocument();
 
-        // Crear el archivo PDF y escribir el contenido del div
         pdfDoc.pipe(fs.createWriteStream(outputPath));
         pdfDoc.text('Esto es el informe:');
+        pdfDoc.text(` `);
+
+        // Añadir información sobre el filtro aplicado a semestre y materia
+        pdfDoc.text(`Este fue el filtro aplicado a semestre: ${semestre}`);
+        pdfDoc.text(`Este fue el filtro aplicado a materias: ${materia}`);
+        pdfDoc.text(`Esta es la cantidad de proyectos encontrados: ${contadorProyectos}`);
+        pdfDoc.text(` `);
+
+        // Crear el archivo PDF y escribir el contenido del div
         pdfDoc.text(contenidoDiv);
 
         // Finalizar el PDF
         pdfDoc.end();
 
         // Enviar la respuesta al cliente
-        res.status(200).send('PDF generado y descargado con éxito.');
+        res.status(200).send('PDF generado y guardado con éxito en la carpeta "pdfs".');
     } catch (error) {
         console.error('Error al generar el PDF:', error);
         res.status(500).send('Error al generar el PDF.');
     }
 };
+
+// export const generarPDF = async (req, res) => {
+//     try {
+//         // Obtener el contenido del div desde el cuerpo de la solicitud
+//         const { contenidoDiv } = req.body;
+        
+
+//         // Configurar las opciones de pdfkit
+//         const outputPath = 'documento.pdf';
+//         const pdfDoc = new PDFDocument();
+
+//         // Crear el archivo PDF y escribir el contenido del div
+//         pdfDoc.pipe(fs.createWriteStream(outputPath));
+//         pdfDoc.text('Esto es el informe:');
+//         pdfDoc.text(contenidoDiv);
+
+//         // Finalizar el PDF
+//         pdfDoc.end();
+
+//         // Enviar la respuesta al cliente
+//         res.status(200).send('PDF generado y descargado con éxito.');
+//     } catch (error) {
+//         console.error('Error al generar el PDF:', error);
+//         res.status(500).send('Error al generar el PDF.');
+//     }
+// };
 
 
 
