@@ -80,11 +80,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
             if (response.status == 200) {
-                alert("proyecto cargado")
+                Swal.fire({
+                    position: "top",
+                    icon: "success",
+                    title: "Proyecto guardado con éxito!",
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
             }
             else {
                 console.error("Error en la respuesta del servidor:", data.message);
-                alert("Datos incorrectos");
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Ocurrio un error',
+                    icon: 'error',
+                    confirmButtonText: 'Volver'
+                  })
             }
 
             document.getElementById("codigo").value = "";

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil Profesor</title>
+    <link rel="stylesheet" href="../css/style_base.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="menu">
+            <div class="elemento">
+                <i class="fa-solid fa-user"></i>
+                <p>Usuario Profesor</p>
+            </div>
+            <div class="elemento">
+                <div style="width: 80px;">
+                    <img src="../img/avatar_profe.jpg" alt="foto-perfil">
+                </div>
+                <h3 id="nombre" style="color: black;"></h3>
+            </div>
+            <div class="elemento">
+                <div class="nav">
+                    <p style="color: gray; font-size: 15px;">Navegación principal</p>
+                    <div class="col">
+                        <a href="./inicio_profesor.html"><i class="fa-solid fa-user"></i>
+                            <p>Perfil</p>
+                        </a>
+                    </div>
+                    <div class="col">
+                        <a href="" id="ref"><i class="fa-solid fa-briefcase"></i>
+                            <p>Materias asociadas</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="elemento">
+                <a href="../login.html" id="cerrar"><i class="fa-solid fa-right-from-bracket"></i>
+                    <p>Cerrar sesión</p>
+                </a>
+            </div>
+        </div>
+        <div class="cont-root">
+            <div class="encabezado">
+                <h1>Repositorio de Proyectos de Ingenieria de Sistemas</h1>
+            </div>
+            <div class="principal">
+                <dialog>
+                    <div class="col-datos">
+                        <p>Correo electrónico:</p>
+                        <p id="correo"></p>
+                    </div>
+                    <div class="col-datos">
+                        <p>Tipo de documento:</p>
+                        <p>CC</p>
+                    </div>
+                    <div class="col-datos">
+                        <p>Número de documento:</p>
+                        <p id="documento"></p>
+                    </div>
+                    <div class="col-datos">
+                        <p>Célular</p>
+                        <p id="celular"></p>
+                    </div>
+                </dialog>
+                <div class="materias">
+                    <h1 style="font-size: 35px; font-weight: bold;">Materias asociadas</h1>
+                    <div class="mat_asociadas" id="mat_asociadas"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/autenticacion.js"></script>
+    <script src="../js/profesor.js"></script>
+    <script src="../js/datosNew.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://kit.fontawesome.com/9e198b2f7c.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

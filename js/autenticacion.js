@@ -12,6 +12,5 @@ document.addEventListener("DOMContentLoaded", function verificarAutenticacion() 
     // Si el usuario no está autenticado, redirige a la página de inicio
     if (!autenticadoreal) {
          window.location.href = "../login.html";
-
     }
 });

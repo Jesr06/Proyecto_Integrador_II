@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    document.getElementById('form').addEventListener('submit', async (event) => {
+    document.getElementById('form2').addEventListener('submit', async (event) => {
         event.preventDefault();
 
         const contrasena = document.getElementById("contrasena").value;
@@ -27,10 +27,21 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log(data);
         
         if(response.status==200){
-            alert("Contraseña cambiada con exito");
+            Swal.fire({
+                position: "top",
+                icon: "success",
+                title: "Contraseña cambiada con éxito!",
+                showConfirmButton: false,
+                timer: 1500
+              })
         }
         else{
-             alert("Ocurrio un error");
+            Swal.fire({
+                title: 'Error!',
+                text: 'Ocurrio un error',
+                icon: 'error',
+                confirmButtonText: 'Volver'
+              })
         }
         document.getElementById("contrasena").value = "";
     });

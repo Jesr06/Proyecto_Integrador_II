@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById('formulario').addEventListener('submit', async (event) => {
@@ -11,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
             user: user,
             pass: pass
         }
+
         const response = await fetch('http://localhost:5500/api/consultar', {
             method: 'POST',
             body: JSON.stringify(body),
@@ -18,32 +18,28 @@ document.addEventListener("DOMContentLoaded", function () {
             headers: {
                 'Content-Type': 'application/json'
             }
-
         });
+        
         const data = await response.json();
         console.log(data);
 
-
-
-
         if (response.status == 200) {
-            localStorage.setItem("infoUser",JSON.stringify(data))
-
-           
-            
+            localStorage.setItem("infoUser", JSON.stringify(data))
             if (data.isadmin == true) {
-                window.location.href = "/admin/perfil_administrador.html";
+                window.location.href = "/admin/inicio_admin.html";
             }
             else {
-
-                window.location.href = "/profesor/perfil_profesor.html";
-
+                window.location.href = "/profesor/inicio_profesor.html";
             }
         }
         else {
-            alert("Credenciales incorrectas");
+            Swal.fire({
+                title: 'Error!',
+                text: 'Credenciales incorrectas',
+                icon: 'error',
+                confirmButtonText: 'Volver'
+              })
         }
-
 
     });
 });

@@ -28,11 +28,22 @@ document.addEventListener("DOMContentLoaded", function () {
         const data= await response.json();
 
         if (response.status == 200) {
-            
-            alert("Semestre cargado")
+            Swal.fire({
+                position: "top",
+                icon: "success",
+                title: "Semestre cargado con éxito!",
+                showConfirmButton: false,
+                timer: 1500
+              })
+            this.location.reload;
         }
         else {
-            alert("Semestre no cargado");
+            Swal.fire({
+                title: 'Error!',
+                text: 'Ocurrio un error',
+                icon: 'error',
+                confirmButtonText: 'Volver'
+              })
         }
 
         document.getElementById("ID_sem").value = "";

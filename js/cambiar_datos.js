@@ -3,9 +3,9 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('form').addEventListener('submit', async (event) => {
         event.preventDefault();
 
-        const nombre = document.getElementById("nombre").value;
-        const celular = document.getElementById("celular").value;
-        const documento = document.getElementById("cedula").value;
+        const nombre = document.getElementById("nombre2").value;
+        const celular = document.getElementById("celular2").value;
+        const documento = document.getElementById("cedula2").value;
 
         const usuario = JSON.parse(localStorage.getItem("infoUser"));
 
@@ -26,22 +26,32 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
         });
+
         const datosNuevos = await response.json();
         console.log(datosNuevos);
 
-
         if (response.status == 200) {
-
             localStorage.setItem("infoNew", JSON.stringify(datosNuevos))
-            alert("Datos cambiados con exito");
+            Swal.fire({
+                position: "top",
+                icon: "success",
+                title: "Datos cambiados con éxito!",
+                showConfirmButton: false,
+                timer: 1500
+              })
         }
         else {
-            alert("Ocurrio un error");
+            Swal.fire({
+                title: 'Error!',
+                text: 'Ocurrio un error',
+                icon: 'error',
+                confirmButtonText: 'Volver'
+              })
         }
 
-        document.getElementById("nombre").value = "";
-        document.getElementById("celular").value = "";
-        document.getElementById("cedula").value = "";
+        document.getElementById("nombre2").value = "";
+        document.getElementById("celular2").value = "";
+        document.getElementById("cedula2").value = "";
     });
 });
 

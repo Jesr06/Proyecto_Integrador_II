@@ -1,4 +1,3 @@
-
 const usuario = JSON.parse(localStorage.getItem("infoUser"));
 document.getElementById("nombre").innerText = usuario.nombre;
 document.getElementById("correo").innerText = usuario.correo;
@@ -6,14 +5,10 @@ document.getElementById("documento").innerText = usuario.documento;
 document.getElementById("celular").innerText = usuario.celular;
 const cajaMaterias = document.getElementById("mat_asociadas")
 
-
-
 function proyectoDeMateria(value) {
     const materiaAsociada = value;
     localStorage.setItem("materiaAsociada", materiaAsociada)
-
 }
-
 
 const materiasProfesor = async () => {
 
@@ -45,7 +40,7 @@ const materiasProfesor = async () => {
 
         let enlaceProyecto = document.createElement('a');
         enlaceProyecto.classList.add("textoMateria")
-        enlaceProyecto.href = "/profesor/subir_proyecto.html";
+        enlaceProyecto.href = "/profesor/nuevo_proyecto.html";
 
         let textoCodigo = document.createElement('p');
         textoCodigo.classList.add("textoMateria")
@@ -55,7 +50,6 @@ const materiasProfesor = async () => {
             proyectoDeMateria(this.innerText);
         };
         
-
         enlaceProyecto.appendChild(textoCodigo);
 
         cajaMateria.appendChild(enlaceProyecto);

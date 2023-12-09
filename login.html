@@ -1,22 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Iniciar Sesion</title>
-<link rel="stylesheet" href="/css/style.css">
+<html lang="es">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/login.css">
 </head>
+
 <body>
-    <div class="login-container">
-        <img src="/img/descarga.jpg" alt="Imagen de encabezado">
-        <h2>Inicia sesion</h2>
-        <form id="formulario">
-            <input type="correo" placeholder="Correo" id="correo" required><br>
-            <input type="contraseña" placeholder="Contraseña" id="contrasena" required><br>
-            <button>Iniciar sesion </button >
-        </form>
+    <div class="container">
+        <div class="encabezado">
+            <div style="width: 100px;">
+                <img src="/img/logo-sistemas.png" alt="" style="width: 100%;">
+            </div>
+            <h1 style="font-size: 25px;">Repositorio de Proyecto de Ingeniería de Sistemas</h1>
+        </div>
+        <p style="font-size: 20px;">Ingrese sus datos para iniciar sesión</p>
+        <div class="datos">
+            <form id="formulario">
+                <div class="col">
+                    <input type="email" placeholder="Correo" id="correo" required>
+                </div><br><br>
+                <div class="col">   
+                    <input type="password" placeholder="Contraseña" id="contrasena" required>
+                </div><br><br>
+                <button>Iniciar sesion </button>
+            </form>
+        </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/js/login.js"></script>
 </body>
+
 </html>

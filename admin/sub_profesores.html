@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subir Profesores</title>
+    <link rel="stylesheet" href="../css/style_base.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="menu">
+            <div class="elemento">
+                <i class="fa-solid fa-user"></i>
+                <p>Usuario Administrador</p>
+            </div>
+            <div class="elemento">
+                <div style="width: 80px;">
+                    <img src="../img/avatar.jpg" alt="foto-perfil">
+                </div>
+                <h3 id="nombre" style="color: black;"></h3>
+            </div>
+            <div class="elemento">
+                <div class="nav">
+                    <p style="color: gray; font-size: 15px;">Navegación principal</p>
+                    <div class="col">
+                        <a href="./inicio_admin.html"><i class="fa-solid fa-user"></i>
+                            <p>Perfil</p>
+                        </a>
+                    </div>
+                    <div class="col">
+                        <a href="./proyectos.html"><i class="fa-solid fa-briefcase"></i>
+                            <p>Ver proyectos</p>
+                        </a>
+                    </div>
+                    <div class="col">
+                        <a href="" id="ref"><i class="fa-solid fa-upload"></i>
+                            <p>Cargar profesores</p>
+                        </a>
+                    </div>
+                    <div class="col">
+                        <a href="./sub_materias.html"><i class="fa-solid fa-upload"></i>
+                            <p>Cargar materias</p>
+                        </a>
+                    </div>
+                    <div class="col">
+                        <a href="./sub_fechas.html"><i class="fa-solid fa-upload"></i>
+                            <p>Cargar fechas</p>
+                        </a>
+                    </div>
+                    <hr>
+                    <div class="col">
+                        <i class="fa-solid fa-calendar-days"></i>
+                        <p>Inicio semestre:</p>
+                        <p id="inicio" style="font-size: 14px;"></p>
+                    </div>
+                    <div class="col">
+                        <i class="fa-solid fa-calendar-days"></i>
+                        <p>Cierre semestre:</p>
+                        <p id="fin" style="font-size: 14px;"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="elemento">
+                <a href="../login.html" id="cerrar"><i class="fa-solid fa-right-from-bracket"></i>
+                    <p>Cerrar sesión</p>
+                </a>
+            </div>
+        </div>
+        <div class="cont-root">
+            <div class="encabezado">
+                <h1>Repositorio de Proyectos de Ingenieria de Sistemas</h1>
+            </div>
+            <div class="principal">
+                <div class="subir">
+                    <h1 style="font-size: 35px; font-weight: bold;">Subir archivo con los usuarios del aplicativo</h1>
+                    <p style="font-size: 25px;">El formato del archivo que se debe subir es: </p>
+                    <p style="font-size: 20px;">| Código | Nombre | Correo | Contraseña | Materias | Tipo |</p>
+                    <div class="cajaGrande" id="cajaGrande">
+                        <div id="drop-area" class="caja_sub">
+                            Arrastra y suelta archivos aquí o haz clic para seleccionar archivos.
+                        </div>
+                        <button class="btn" id="enviarUsuarios">enviar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/profesor.js"></script>
+    <script src="../js/datosNew.js"></script>
+    <script src="../js/fechas.js"></script>
+    <script src="../js/autenticacion.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+    <script src="../js/archivos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://kit.fontawesome.com/9e198b2f7c.js" crossorigin="anonymous"></script>
+</body>
+
+</html>
